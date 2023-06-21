@@ -26,13 +26,24 @@ const AuthProvider = ({ children }) => {
     setIsAuthenticated(true);
   };
 
+  const register = async (username, password) => {
+    const creds = { username, password };
+    const host = "http://localhost:5000";
+    await Axios.post(`${host}/api/register`, creds, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+    });
+  };
+
   const logout = () => {
     localStorage.removeItem('token');
     setIsAuthenticated(false);
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, login, logout }}>
+    <AuthContext.Provider value={{ isAuthenticated, login, register, logout }}>
       {children}
     </AuthContext.Provider>
   );

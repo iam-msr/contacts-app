@@ -1,28 +1,19 @@
 import React, { useState, useContext } from 'react';
-import { AuthContext } from '../../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
-import Axios from 'axios';
+import { AuthContext } from '../../contexts/AuthContext';
 
 const Register = (props) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const { login } = useContext(AuthContext);
+  const { register } = useContext(AuthContext);
   const navigate = useNavigate();
   const [error, setError] = useState(null); // State to store error message
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const creds = { username, password };
-    const host = "http://localhost:5000";
   
     try {
-      const response = await Axios.post(`${host}/api/register`, creds, {
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-        },
-      });
-      console.log(response.data); // Log response data for debugging
+      await register(username, password);
       navigate('/login');
     } catch (error) {
       console.error("Error occurred:", error);

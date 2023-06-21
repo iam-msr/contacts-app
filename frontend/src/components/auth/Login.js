@@ -1,7 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { AuthContext } from '../../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
-import Axios from 'axios';
 
 const Login = (props) => {
   const [username, setUsername] = useState('');
@@ -12,15 +11,7 @@ const Login = (props) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const creds = { username, password };
-    const host = "http://localhost:5000"
     try {
-      const response = await Axios.post(`${host}/api/login`, creds, {
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-        },
-      });
       await login(username, password);
       navigate('/');
     } catch (error) {
